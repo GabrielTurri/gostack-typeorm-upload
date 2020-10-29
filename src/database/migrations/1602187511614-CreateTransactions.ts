@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export default class CreateTransactions1602187511614
   implements MigrationInterface {
@@ -22,22 +17,16 @@ export default class CreateTransactions1602187511614
           {
             name: 'title',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'type',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'value',
-            type: 'integer',
-            isNullable: false,
-          },
-          {
-            name: 'category_id',
-            type: 'uuid',
-            isNullable: true,
+            type: 'decimal',
+            precision: 10,
+            scale: 2,
           },
           {
             name: 'created_at',
