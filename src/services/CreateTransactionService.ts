@@ -1,8 +1,9 @@
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, getRepository } from 'typeorm';
 import TransactionsRepository from '../repositories/TransactionsRepository';
 // import AppError from '../errors/AppError';
 
 import Transaction from '../models/Transaction';
+import Category from '../models/Category';
 
 interface Request {
   title: string;
@@ -23,10 +24,27 @@ class CreateTransactionService {
     }
 
     const transactionsRepository = getCustomRepository(TransactionsRepository);
+    const categoryRepository = getRepository(Category);
 
     const checkCategoryExists = await transactionsRepository.findOne({
       where: { category },
     });
+
+    // const { total } = await transactionsRepository.getBalance();
+
+    let transactionCategory = await categoryRepository.findOne({
+      where: {
+        title: category,
+      },
+    });
+
+    if (!transactionCategory) {
+      transactionCategory = categoryRepository.create({
+        title: category,
+      });
+
+      await categoryRepository.save(transactionCategory);
+    }
 
     if (checkCategoryExists) {
       // matches category id
