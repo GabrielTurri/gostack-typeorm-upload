@@ -1,4 +1,4 @@
-import { json, Router } from 'express';
+import { Router } from 'express';
 import multer from 'multer';
 
 import { getCustomRepository } from 'typeorm';
